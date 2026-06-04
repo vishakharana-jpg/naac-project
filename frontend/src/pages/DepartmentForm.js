@@ -176,7 +176,7 @@ const metrics = [
       },
       {
         label: "iii. c) Citation indices-WoS",
-        key: "h_index_wos",
+        key: "index_wos",
       },
     ],
   },
@@ -335,6 +335,28 @@ function MetricCard({ metric, formData, onChange, onFileChange, fileNames }) {
             </div>
           )}
 
+          {/* Subfields inputs */}
+          {metric.type === "subfields" && (
+            <div className="space-y-3">
+              {metric.fields.map((f) => (
+                <div key={f.key}>
+                  <label className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider block mb-1">
+                    {f.label}
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Enter value..."
+                    value={formData[`${metric.id}_${f.key}`] || ""}
+                    onChange={(e) =>
+                      onChange(`${metric.id}_${f.key}`, e.target.value)
+                    }
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+
           {/* ── SIRF EK Description Box (relevance hata diya) ── */}
           <div>
             <label className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider block mb-1">
@@ -364,7 +386,7 @@ function MetricCard({ metric, formData, onChange, onFileChange, fileNames }) {
                 📎 Attach File
               </button>
               <span className="text-xs text-gray-400 truncate max-w-[200px]">
-                {fileNames[metric.id] || "No file chosen"}
+                {fileNames[metric.id] ? fileNames[metric.id].name : "No file chosen"}
               </span>
               <input
                 ref={fileRef}
@@ -391,24 +413,29 @@ export default function DepartmentForm() {
   const handleChange = (key, value) =>
     setFormData((prev) => ({ ...prev, [key]: value }));
 
- const handleFileChange = (metricId, file) => {
+  const handleFileChange = (metricId, file) => {
     if (!file) return;
-    setFileNames((prev) => ({ ...prev, [metricId]: file })); 
+    setFileNames((prev) => ({ ...prev, [metricId]: file }));
   };
-  const handleSubmit = async () => {
-    for (const metric of metrics) {
-      const formDataToSend = new FormData();
-      formDataToSend.append("section", String(metric.id));
-      formDataToSend.append("heading", metric.heading);
-      formDataToSend.append("description", formData[`${metric.id}_description`] || "");
-      
-      const file = fileNames[metric.id];
-      if (file) formDataToSend.append("pdf", file);
 
-      await fetch("http://localhost:8000/api/department/submit", {
-        method: "POST",
-        body: formDataToSend,
-      });
+  const handleSubmit = async () => {
+    try {
+      for (const metric of metrics) {
+        const formDataToSend = new FormData();
+        formDataToSend.append("section", String(metric.id));
+        formDataToSend.append("heading", metric.heading);
+        formDataToSend.append("description", formData[`${metric.id}_description`] || "");
+
+        const file = fileNames[metric.id];
+        if (file) formDataToSend.append("pdf", file);
+
+        await fetch("http://localhost:8000/api/department/submit", {
+          method: "POST",
+          body: formDataToSend,
+        });
+      }
+    } catch (error) {
+      console.error("Server error:", error);
     }
     setSubmitted(true);
   };
@@ -425,26 +452,28 @@ export default function DepartmentForm() {
       ],
     ];
     metrics.forEach((m) => {
-      if (m.type === "number") {
-        m.fields.forEach((f) =>
+      if (m.type === "number" || m.type === "subfields") {
+        // FIX 1: number aur subfields dono ke liye fields use karo
+        (m.fields || []).forEach((f) =>
           rows.push([
             m.id,
             m.heading,
             f.label,
             formData[`${m.id}_${f.key}`] || "",
             formData[`${m.id}_description`] || "",
-            fileNames[m.id] || "",
+            fileNames[m.id] ? fileNames[m.id].name : "",
           ]),
         );
       } else {
-        m.options.forEach((opt) =>
+        // FIX 2: options undefined hone par crash na ho
+        (m.options || []).forEach((opt) =>
           rows.push([
             m.id,
             m.heading,
             opt,
             formData[`${m.id}_${opt}`] ? "Yes" : "No",
             formData[`${m.id}_description`] || "",
-            fileNames[m.id] || "",
+            fileNames[m.id] ? fileNames[m.id].name : "",
           ]),
         );
       }
@@ -460,12 +489,14 @@ export default function DepartmentForm() {
     a.click();
     URL.revokeObjectURL(url);
   };
-const completedCount = metrics.filter((m) => {
-  if (m.type === "number") return m.fields.some((f) => formData[`${m.id}_${f.key}`]);
-  if (m.type === "checkbox") return m.options.some((o) => formData[`${m.id}_${o}`]);
-  if (m.type === "subfields") return m.fields.some((f) => formData[`${m.id}_${f.key}`]);
-  return false;
-}).length;
+
+  const completedCount = metrics.filter((m) => {
+    if (m.type === "number") return m.fields.some((f) => formData[`${m.id}_${f.key}`]);
+    if (m.type === "checkbox") return m.options.some((o) => formData[`${m.id}_${o}`]);
+    if (m.type === "subfields") return m.fields.some((f) => formData[`${m.id}_${f.key}`]);
+    return false;
+  }).length;
+
   if (submitted) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">

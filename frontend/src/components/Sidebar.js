@@ -18,6 +18,8 @@ const Sidebar = () => {
     "Sports",
     "Placement Cell",
     "DIC/IQAC",
+    "MMTTC",
+    "DEVELOPMENT AND PLANNING"
   ];
 
   return (
