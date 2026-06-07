@@ -1,19 +1,19 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Header from './components/Header';
-import Body from './components/Body';
-import Footer from './components/Footer.js';
-import FacultyPage from './pages/FaculityPage.js';
-import ArtsFaculty from './pages/ArtsFaculity.js';
-import ScienceFaculity from './pages/ScienceFaculity.js'
-import ManagementFaculty from './pages/ManagementFaculty.js';
-import TechnologyFaculty from './pages/TechnologyFaculty.js'
-import BiomedicalFaculty from './pages/BiomedicalFaculty.js';
-import DepartmentForm from './pages/DepartmentForm';
-import Navbar from "./components/Navbar";
-import Home from "./components/Home";
-import About from "./components/About";
-import Contact from "./components/Contact";
-import Footer from "./components/Footer";
+import Header from './components/Header.jsx';
+import Body from './components/Body.jsx';
+import Footer from './components/Footer.jsx';
+import FacultyPage from './pages/FaculityPage.jsx';
+import ArtsFaculty from './pages/ArtsFaculity.jsx';
+import ScienceFaculity from './pages/ScienceFaculity.jsx'
+import ManagementFaculty from './pages/ManagementFaculty.jsx';
+import TechnologyFaculty from './pages/TechnologyFaculty.jsx'
+import BiomedicalFaculty from './pages/BiomedicalFaculty.jsx';
+import DepartmentForm from './pages/DepartmentForm.jsx';
+import Navbar from "./components/Navbar.jsx";
+import Home from "./components/Home.jsx";
+import About from "./components/About.jsx";
+import Contact from "./components/Contact.jsx";
+
 
 function App() {
   return (
@@ -31,6 +31,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/" element={<Body />} />
 
       </Routes>
       <Footer/>

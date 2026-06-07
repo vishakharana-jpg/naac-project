@@ -2,9 +2,6 @@ import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 const metrics = [
-
-
-
   {
     id: 12, // ← heading number (jo form mein dikhega)
     heading: "Indian Knowledge System", // ← badi heading (bold)
@@ -19,7 +16,81 @@ const metrics = [
       "None of the above",
     ],
   },
-  
+  {
+    id: 14,
+    heading: "Faculty Development",
+    sections: [
+      {
+        subheading:
+          "Number of faculty attending orientation programme/faculty development programme and/or refresher courses (Govt. of India programs organized by MMTTC, AICTE, UGC, ARPIT and similar organisations)",
+        type: "number",
+        fields: [
+          { label: "2025-26", key: "y1" },
+          { label: "2024-25", key: "y2" },
+        ],
+      },
+      {
+        subheading:
+          "Number of faculty sponsored for industrial training, social sector projects, fellowships",
+        type: "number",
+        fields: [
+          { label: "2025-26", key: "y1" },
+          { label: "2024-25", key: "y2" },
+        ],
+      },
+    ],
+  },
+
+  {
+    id: 15,
+    heading: "Physical infrastrure",
+    section: [
+      {
+        subTitle:
+          "The University has the facilities in the form of following physical infrastructure",
+        type: "checkbox",
+        options: [
+          "Classroom",
+          "Reasearch Library",
+          "Computer center",
+          "Workshops",
+          "Restaurant",
+          "Theatre",
+          "Dining hall",
+          "library",
+          "Administrative offie",
+          "Faculty room",
+          "Central stores",
+          "Security",
+          "HouseKeeping",
+          "Examination control office",
+          "Placement office",
+          "Commom room",
+          "First aid cum sick room",
+          "Guest house",
+          "Sports faculty/ Gymnasium",
+          "Auditorium",
+          "Hostel",
+          "Transport facilities for connecting to the student, faculty and staff",
+          "Any other include",
+        ],
+      },
+      {
+        title: "Divyangjan-friendly Facilities",
+        subTitle:
+          "The university has Divyanjan-friendly, barrier-free environment facilities like: ",
+        type: "checkbox",
+        options: [
+          "Built environment with ramps/lifts and other facilities for eassy access to classroom.",
+          "Divyanjan-friendly washroom",
+          "Signage including tactile path, light, display boards and sign posts",
+          "Assistive technology and facilities for Divyanjan-accessible website, srceen-reading",
+          "Provision for enquiry and information: Human assistance, reader, scribe, soft copies of reading material",
+        ],
+      },
+    ],
+  },
+
   {
     id: 18,
     heading: "IT infrastructure",
@@ -60,6 +131,68 @@ const metrics = [
     ],
   },
   {
+    id: 19,
+    heading: "Innovation Resources",
+    section: [
+      {
+        subTitle: "The University has Innovation/tinkering labs.",
+        type: "checkbox",
+        options: ["Yes", "No"],
+      },
+    ],
+    descriptionBox: {
+      label: "Description of the metric",
+      key: "description",
+      type: "textarea",
+    },
+    yearFields: [
+      {
+        subheading:
+          "A. The amount received by University towards Capital (in Lakhs)",
+        fields: [
+          {
+            label: "i. Government grants (in Lakhs)",
+            key: "govt_grants",
+            years: ["2024-25", "2025-26"],
+          },
+          {
+            label: "ii. Management contributions (in Lakhs)",
+            key: "mgmt_contributions",
+            years: ["2024-25", "2025-26"],
+          },
+          {
+            label: "iii. Loans, endowments, etc. (in Lakhs)",
+            key: "loans_endowments",
+            years: ["2024-25", "2025-26"],
+          },
+        ],
+      },
+      {
+        subheading:
+          "B. University Capital Expenditure Include the amount towards:",
+        fields: [
+          {
+            label:
+              "i. Building (academic infrastructure, library, payment of rentals etc.) (in Lakhs)",
+            key: "building",
+            years: ["2024-25", "2025-26"],
+          },
+          {
+            label: "ii. Laboratory and equipments (in Lakhs)",
+            key: "lab_equipments",
+            years: ["2024-25", "2025-26"],
+          },
+          {
+            label:
+              "iii. Other infrastructure (hostels, residence, amenities) (in Lakhs)",
+            key: "other_infra",
+            years: ["2024-25", "2025-26"],
+          },
+        ],
+      },
+    ],
+  },
+  {
     id: 37,
     heading: "National Level Academic/Research Colleboration",
     subheading: "University establishedactive national colleboration support",
@@ -87,14 +220,16 @@ const metrics = [
     ],
   },
   {
-    id:46,
-    heading:"Total number of sanctioned seats in the first year of various program year wise, during the last year",
+    id: 46,
+    heading:
+      "Total number of sanctioned seats in the first year of various program year wise, during the last year",
     type: "number",
     fields: [
       { label: "2025-26", key: "y1" },
-      { label: "2024-245", key: "y2" },
+      { label: "2024-25", key: "y2" },
     ],
   },
+
   {
     id: 50,
     heading: "Student Awards/Prizes/Recognitions",
@@ -103,7 +238,7 @@ const metrics = [
     fields: [
       {
         label:
-          "i. Total Number of students receiving awards for Academic excellence at University Level/State level/National Level (consolidated of 2024-25, 2023-24, 2022-23)",
+          "i. Total Number of students receiving awards for Academic excellence at University Level/State level/National Level ",
         key: "academic_awards",
       },
       {
@@ -158,25 +293,13 @@ const metrics = [
     fields: [
       {
         label:
-          "i. Total Number of publications by the University's Teachers in peer-reviewed journals listed in Scopus/WoS, journals identified by the university as per UGC guidelines and in indexed conference proceedings. (consolidated of 2024-25, 2023-24, 2022-23)",
+          "i. Total Number of publications by the University's Teachers in peer-reviewed journals listed in Scopus/WoS, journals identified by the university as per UGC guidelines and in indexed conference proceedings. ",
         key: "peer_reviewed",
       },
       {
         label:
-          "ii. Total Number of books published by the University's Teachers including Op-Ed articles, Research Reports / Policy documents / book chapters and/or translated in Bhartiya Bhashas. (consolidated of 2024-25, 2023-24, 2022-23)",
+          "ii. Total Number of books published by the University's Teachers including Op-Ed articles, Research Reports / Policy documents / book chapters and/or translated in Bhartiya Bhashas. ",
         key: "books_published",
-      },
-      {
-        label: "iii. Research Quality — a) h-indices Scopus",
-        key: "h_index_scopus",
-      },
-      {
-        label: "iii. b) h-indices WoS",
-        key: "h_index_wos",
-      },
-      {
-        label: "iii. c) Citation indices-WoS",
-        key: "index_wos",
       },
     ],
   },
@@ -311,7 +434,7 @@ function MetricCard({ metric, formData, onChange, onFileChange, fileNames }) {
             </div>
           )}
 
-          {/* Checkboxes */}
+          {/* Direct Checkboxes - metric level */}
           {metric.type === "checkbox" && (
             <div className="space-y-2">
               {metric.options.map((opt) => (
@@ -335,29 +458,126 @@ function MetricCard({ metric, formData, onChange, onFileChange, fileNames }) {
             </div>
           )}
 
-          {/* Subfields inputs */}
-          {metric.type === "subfields" && (
-            <div className="space-y-3">
-              {metric.fields.map((f) => (
-                <div key={f.key}>
-                  <label className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider block mb-1">
-                    {f.label}
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Enter value..."
-                    value={formData[`${metric.id}_${f.key}`] || ""}
-                    onChange={(e) =>
-                      onChange(`${metric.id}_${f.key}`, e.target.value)
-                    }
-                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-300"
-                  />
+          {metric.section && (
+            <div className="space-y-6">
+              {metric.section.map((section, sIndex) => (
+                <div key={sIndex} className="space-y-3">
+                  {/* Title - agar ho toh */}
+                  {section.title && (
+                    <h3 className="text-sm font-bold text-gray-800">
+                      {section.title}
+                    </h3>
+                  )}
+
+                  {/* SubTitle */}
+                  {(section.subTitle || section.subheading) && (
+                    <p className="text-[12px] font-semibold text-gray-600 leading-snug">
+                      {section.subTitle || section.subheading}
+                    </p>
+                  )}
+
+                  {/* Section ke checkboxes */}
+                  {section.type === "checkbox" && section.options && (
+                    <div className="space-y-2">
+                      {section.options.map((opt) => (
+                        <label
+                          key={opt}
+                          className="flex items-center gap-3 cursor-pointer group"
+                        >
+                          <input
+                            type="checkbox"
+                            checked={
+                              !!formData[`${metric.id}_${sIndex}_${opt}`]
+                            }
+                            onChange={(e) =>
+                              onChange(
+                                `${metric.id}_${sIndex}_${opt}`,
+                                e.target.checked,
+                              )
+                            }
+                            className="w-4 h-4 rounded accent-indigo-600"
+                          />
+                          <span className="text-sm text-gray-700 group-hover:text-indigo-700 transition-colors">
+                            {opt}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Fields wala - dusre metrics ke liye */}
+                  {section.fields && (
+                    <div className="flex gap-4">
+                      {section.fields.map((f) => (
+                        <div key={f.key} className="flex-1">
+                          <label className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider block mb-1">
+                            {f.label}
+                          </label>
+                          <input
+                            type={section.type || "text"}
+                            placeholder="Enter value..."
+                            value={
+                              formData[`${metric.id}_${sIndex}_${f.key}`] || ""
+                            }
+                            onChange={(e) =>
+                              onChange(
+                                `${metric.id}_${sIndex}_${f.key}`,
+                                e.target.value,
+                              )
+                            }
+                            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+          {metric.yearFields && (
+            <div className="space-y-6 mt-4">
+              {metric.yearFields.map((group, gIndex) => (
+                <div key={gIndex} className="space-y-4">
+                  <h3 className="text-sm font-bold text-gray-800">
+                    {group.subheading}
+                  </h3>
+                  {group.fields.map((field, fIndex) => (
+                    <div key={fIndex} className="space-y-1">
+                      <label className="text-[12px] font-semibold text-gray-600">
+                        {field.label}
+                      </label>
+                      <div className="flex gap-4">
+                        {field.years.map((year) => (
+                          <div key={year} className="flex-1">
+                            <label className="text-[11px] text-gray-400 block mb-1">
+                              {year}
+                            </label>
+                            <input
+                              type="number"
+                              placeholder="0"
+                              value={
+                                formData[`${metric.id}_${field.key}_${year}`] ||
+                                ""
+                              }
+                              onChange={(e) =>
+                                onChange(
+                                  `${metric.id}_${field.key}_${year}`,
+                                  e.target.value,
+                                )
+                              }
+                              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-300"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               ))}
             </div>
           )}
 
-          {/* ── SIRF EK Description Box (relevance hata diya) ── */}
           <div>
             <label className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider block mb-1">
               Description of the Metric
@@ -386,7 +606,9 @@ function MetricCard({ metric, formData, onChange, onFileChange, fileNames }) {
                 📎 Attach File
               </button>
               <span className="text-xs text-gray-400 truncate max-w-[200px]">
-                {fileNames[metric.id] ? fileNames[metric.id].name : "No file chosen"}
+                {fileNames[metric.id]
+                  ? fileNames[metric.id].name
+                  : "No file chosen"}
               </span>
               <input
                 ref={fileRef}
@@ -424,7 +646,10 @@ export default function DepartmentForm() {
         const formDataToSend = new FormData();
         formDataToSend.append("section", String(metric.id));
         formDataToSend.append("heading", metric.heading);
-        formDataToSend.append("description", formData[`${metric.id}_description`] || "");
+        formDataToSend.append(
+          "description",
+          formData[`${metric.id}_description`] || "",
+        );
 
         const file = fileNames[metric.id];
         if (file) formDataToSend.append("pdf", file);
@@ -491,9 +716,12 @@ export default function DepartmentForm() {
   };
 
   const completedCount = metrics.filter((m) => {
-    if (m.type === "number") return m.fields.some((f) => formData[`${m.id}_${f.key}`]);
-    if (m.type === "checkbox") return m.options.some((o) => formData[`${m.id}_${o}`]);
-    if (m.type === "subfields") return m.fields.some((f) => formData[`${m.id}_${f.key}`]);
+    if (m.type === "number")
+      return m.fields.some((f) => formData[`${m.id}_${f.key}`]);
+    if (m.type === "checkbox")
+      return m.options.some((o) => formData[`${m.id}_${o}`]);
+    if (m.type === "subfields")
+      return m.fields.some((f) => formData[`${m.id}_${f.key}`]);
     return false;
   }).length;
 
@@ -609,7 +837,6 @@ export default function DepartmentForm() {
             onClick={exportToExcel}
             className="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl text-sm transition-colors cursor-pointer"
           >
-            
             📊 Export to Excel / CSV
           </button>
           <button

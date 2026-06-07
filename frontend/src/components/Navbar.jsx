@@ -6,8 +6,9 @@ function Navbar() {
   };
 
   return (
-    <nav className="bg-blue-500 border-b border-gray-700 shadow-lg">
-      <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+    <nav className="bg-blue-500 ">
+  <div className="max-w-6xl mx-auto px-6 py-0 flex items-center justify-between">
+
         
         {/* Nav Links */}
         <div className="flex mx-auto gap-12">
@@ -33,18 +34,18 @@ function Navbar() {
         </div>
 
         {/* Auth Button */}
-        <div className="ml-auto pr-10">
+        <div className="ml-auto pr-10 mb-5">
           {localStorage.getItem("token") ? (
             <button
               onClick={logout}
-              className="text-lg font-semibold text-white bg-red-600 hover:bg-red-700 px-5 py-2 rounded-lg tracking-wide transition-colors duration-200"
+              className="text-lg font-semibold text-white bg-red-600 hover:bg-red-700 px-5 py-1 rounded-lg tracking-wide transition-colors duration-200"
             >
               Logout
             </button>
           ) : (
             <Link
               to="/login"
-              className="text-lg font-semibold text-white bg-indigo-600 hover:bg-indigo-700 px-5 py-2 rounded-lg tracking-wide transition-colors duration-200"
+              className="text-lg font-semibold text-white bg-indigo-600 hover:bg-indigo-700 px-5 py-1 rounded-lg tracking-wide transition-colors duration-200"
             >
               Login
             </Link>

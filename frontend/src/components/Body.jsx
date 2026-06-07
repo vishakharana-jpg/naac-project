@@ -1,17 +1,11 @@
 import React from 'react'
 import Sidebar from './Sidebar'
-
-
+import Banner from "../assets/Images/Banner.png";
 
 const Body = () => {
   return (
-    <div className="bg-gray-200">
+    <div className="min-h-screen bg-blue-950">
       <Sidebar />
-      <div className="flex-1">
-        
-       
-      
-      </div>
     </div>
   )
 }

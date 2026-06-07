@@ -4,7 +4,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="bg-slate-900 text-gray-300 mt-10">
+    <footer className="bg-slate-900 text-gray-300 ">
       
       {/* Top Section */}
       <div className="max-w-7xl mx-auto px-6 py-10 grid md:grid-cols-4 gap-8">
