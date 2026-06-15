@@ -4,7 +4,7 @@ import FacultyPage from "../pages/FaculityPage.jsx";
 import DicPage from "../pages/DicPage.jsx";
 import GenralPage from "../pages/GenralPage.jsx";
 import Banner from "../assets/Images/Banner.png";
-import QuickLinks from "./QuickLinks.jsx";
+
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -68,7 +68,7 @@ const Sidebar = () => {
         className="object-cover"
       />
     </div>
-    <QuickLinks />
+   
   </div>
 )}
 

@@ -17,6 +17,72 @@ const departments = [
   { id: "library",     name: "Library & Information Science",  icon: "📚", color: { active: "#EA580C", light: "#FFEDD5", border: "#FED7AA", text: "#C2410C" } },
 ];
 
+
+function LoginModal({ dept, onClose, onSuccess }) {
+   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleLogin = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const response = await fetch("http://localhost:8000/api/auth/dept-login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ deptId: `arts_${dept.id}`, password }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        localStorage.setItem(`token_arts_${dept.id}`, data.token);
+        onSuccess(dept);
+      } else {
+        setError(data.message);
+      }
+    } catch (err) {
+      setError("Server se connect nahi ho pa raha!");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000 }}>
+      <div style={{ background: "#fff", borderRadius: 16, padding: "2rem", width: "100%", maxWidth: 400 }}>
+        <h2 style={{ fontSize: 20, fontWeight: 700, color: "#1E1B4B", marginBottom: 4 }}>{dept.name}</h2>
+        <p style={{ color: "#6B7280", fontSize: 13, marginBottom: 20 }}>Password daalo</p>
+        {error && <div style={{ background: "#FEE2E2", color: "#DC2626", padding: "8px 12px", borderRadius: 8, marginBottom: 16, fontSize: 13 }}>{error}</div>}
+    <div style={{ position: "relative", marginBottom: 16 }}>
+  <input
+    type={showPassword ? "text" : "password"}
+    value={password}
+    onChange={(e) => setPassword(e.target.value)}
+    placeholder="Password daalo"
+    style={{ width: "100%", border: "1px solid #D1D5DB", borderRadius: 8, padding: "10px 14px", fontSize: 14, outline: "none", boxSizing: "border-box", paddingRight: 40 }}
+  />
+  <button
+    type="button"
+    onClick={() => setShowPassword(!showPassword)}
+    style={{ position: "absolute", right: 10, top: 10, background: "none", border: "none", cursor: "pointer", fontSize: 18 }}
+  >
+    {showPassword ? "🙈" : "👁️"}
+  </button>
+</div>
+        <div style={{ display: "flex", gap: 10 }}>
+          <button onClick={onClose} style={{ flex: 1, padding: "10px", borderRadius: 8, border: "1px solid #D1D5DB", background: "#fff", cursor: "pointer" }}>Cancel</button>
+          <button onClick={handleLogin} disabled={loading} style={{ flex: 1, padding: "10px", borderRadius: 8, border: "none", background: "#1E1B4B", color: "#fff", cursor: "pointer", fontWeight: 600 }}>
+            {loading ? "Loading..." : "Login"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+
+
 function DeptCard({ dept, onClick }) {
   const [hovered, setHovered] = useState(false);
 
@@ -74,13 +140,22 @@ function DeptCard({ dept, onClick }) {
 
 export default function ArtsFaculty() {
   const navigate = useNavigate();
+  const [selectedDept, setSelectedDept] = useState(null);
 
-  const handleDeptClick = (dept) => {
-    navigate(`/faculty/arts/${dept.id}/form`);
+ const handleDeptClick = (dept) => {
+    setSelectedDept(dept);
   };
+  
 
   return (
     <div style={{ minHeight: "100vh", background: "#F8FAFC", fontFamily: "'DM Sans', 'Segoe UI', sans-serif" }}>
+       {selectedDept && (
+        <LoginModal
+          dept={selectedDept}
+          onClose={() => setSelectedDept(null)}
+          onSuccess={(dept) => { setSelectedDept(null); navigate(`/faculty/arts/${dept.id}/form`); }}
+        />
+      )}
      
       {/* Header */}
       <div style={{ background: "#1E1B4B", color: "#fff", padding: "1.25rem 2rem" }}>

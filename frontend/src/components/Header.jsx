@@ -16,13 +16,13 @@ const Header = () => {
 
         {/* Center - University Info */}
         <div className="flex-1 text-center">
-          <h1 className="text-xl font-bold">KUMAUN UNIVERSITY </h1>
-          <h3 className="text-sm">Accredited Grade "B" by NAAC</h3>
+          <h1 className="text-4xl font-bold">KUMAUN UNIVERSITY </h1>
+          <h3 className="text-xl">Accredited Grade "B+" by NAAC</h3>
         </div>
       </div>
 
-      {/* Navbar - HOME ABOUT CONTACT left, Login right */}
-      <Navbar />
+     
+      <Navbar/>
     </div>
   );
 };

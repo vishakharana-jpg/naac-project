@@ -10,10 +10,9 @@ import TechnologyFaculty from './pages/TechnologyFaculty.jsx'
 import BiomedicalFaculty from './pages/BiomedicalFaculty.jsx';
 import DepartmentForm from './pages/DepartmentForm.jsx';
 import Navbar from "./components/Navbar.jsx";
-import Home from "./components/Home.jsx";
-import About from "./components/About.jsx";
-import Contact from "./components/Contact.jsx";
-
+import Login from "./components/Login.jsx";
+import AdminPanel from './pages/AdminPanel.jsx';
+import AdminLogin from './pages/AdminLogin.jsx';
 
 function App() {
   return (
@@ -28,10 +27,10 @@ function App() {
         <Route path="/faculty/technology" element={<TechnologyFaculty/>}/>
         <Route path="/faculty/biomedical" element={<BiomedicalFaculty/>}/>
         <Route path="/faculty/:facultyId/:deptId/form" element={<DepartmentForm />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/" element={<Body />} />
+       <Route path="/" element={<Body />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/admin" element={<AdminPanel />} />
+        <Route path="/admin-login" element={<AdminLogin />} />
 
       </Routes>
       <Footer/>

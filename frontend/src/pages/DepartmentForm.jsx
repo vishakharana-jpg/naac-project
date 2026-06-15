@@ -641,29 +641,32 @@ export default function DepartmentForm() {
   };
 
   const handleSubmit = async () => {
-    try {
-      for (const metric of metrics) {
-        const formDataToSend = new FormData();
-        formDataToSend.append("section", String(metric.id));
-        formDataToSend.append("heading", metric.heading);
-        formDataToSend.append(
-          "description",
-          formData[`${metric.id}_description`] || "",
-        );
+  try {
+    const data = new FormData();
+    data.append("section", "faculty");   // ← apna section name
+    data.append("department", "General"); // ← apna department
+    data.append("formData", JSON.stringify(formData));
 
-        const file = fileNames[metric.id];
-        if (file) formDataToSend.append("pdf", file);
+    Object.entries(fileNames).forEach(([metricId, file]) => {
+      data.append(`file_${metricId}`, file);
+    });
 
-        await fetch("http://localhost:8000/api/department/submit", {
-          method: "POST",
-          body: formDataToSend,
-        });
-      }
-    } catch (error) {
-      console.error("Server error:", error);
+    const res = await fetch("http://localhost:8000/api/department/submit", {
+      method: "POST",
+      body: data,
+    });
+
+    const result = await res.json();
+    if (result.success) {
+      setSubmitted(true);
+    } else {
+      alert("Error: " + result.message);
     }
-    setSubmitted(true);
-  };
+  } catch (error) {
+    console.error("Submit error:", error);
+    alert("Server se connect nahi ho pa raha!");
+  }
+};
 
   const exportToExcel = () => {
     const rows = [
