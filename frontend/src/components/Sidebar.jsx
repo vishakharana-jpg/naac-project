@@ -3,7 +3,9 @@ import DepartmentCard from "../pages/FaculityPage.jsx";
 import FacultyPage from "../pages/FaculityPage.jsx";
 import DicPage from "../pages/DicPage.jsx";
 import GenralPage from "../pages/GenralPage.jsx";
+import LibraryPage from "../pages/LibraryPage.jsx";
 import Banner from "../assets/Images/Banner.png";
+
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -75,6 +77,7 @@ const Sidebar = () => {
           {selectedItem === "Faculty" && <FacultyPage />}
           {selectedItem === "DIC/IQAC" && <DicPage />}
           {selectedItem === "Genral section" && <GenralPage />}
+           {selectedItem === "Library" && <LibraryPage />}
         </div>
         
       </div>

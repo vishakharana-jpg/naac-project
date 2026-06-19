@@ -8,7 +8,7 @@ export default function AdminLogin() {
 
   const handleLogin = () => {
     // Ye password sirf client ko pata hoga
-    if (password === 'naac2025') {
+    if (password === 'DSB') {
       localStorage.setItem('adminAuth', 'true');
       navigate('/admin');
     } else {

@@ -1,16 +1,16 @@
-import React, { useState } from 'react'
-import DicForm from './DicForm'
+import React, { useState } from "react";
+import LibraryForm  from './LibraryForm';
 
-const dicCards = [
-  {
+const libraryCard = [
+  { 
     id: 1,
-    title: "DIC Self-Assessment",
-    description: "Fill the NAAC self-assessment form covering Curriculum Flexibility, Grievance Handling, and e-Governance metrics.",
+    title:
+      "Fill the NAAC self-assessment form covering Learning Resources, Research resources ",
     icon: "📋",
     badge: "4 Sections",
     color: "blue",
   },
-]
+];
 
 const colorMap = {
   blue: {
@@ -19,22 +19,19 @@ const colorMap = {
     btn: "bg-blue-600 hover:bg-blue-700 text-white",
     border: "border-blue-100 hover:border-blue-300",
   },
-}
+};
 
-const DicPage = () => {
-  const [formOpen, setFormOpen] = useState(false)
-
-  return (
-    <div className="min-h-screen bg-slate-50">
-
- {/* Cards Section */}
+const LibraryPage = () => {
+  const [formOpen, setFormOpen] = useState(false);
+  return( <div className="min-h-screen bg-slate-50">
+  {/* Cards Section */}
       <main className="max-w-5xl mx-auto px-6 py-10">
         <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-widest mb-5">
           Available Forms
         </h3>
 {/*main */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {dicCards.map((card) => {
+          {libraryCard.map((card) => {
             const c = colorMap[card.color]
             return (
               <div
@@ -86,9 +83,11 @@ const DicPage = () => {
       </footer>
 
       {/* Modal */}
-      {formOpen && <DicForm onClose={() => setFormOpen(false)} />}
-    </div>
-  )
-}
+      {formOpen && <LibraryForm onClose={() => setFormOpen(false)} />}
 
-export default DicPage;
+  </div>
+  )
+};
+
+
+export default LibraryPage;

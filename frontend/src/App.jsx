@@ -13,6 +13,7 @@ import Navbar from "./components/Navbar.jsx";
 import Login from "./components/Login.jsx";
 import AdminPanel from './pages/AdminPanel.jsx';
 import AdminLogin from './pages/AdminLogin.jsx';
+import LibraryPage from './pages/LibraryPage.jsx';
 
 function App() {
   return (
@@ -27,7 +28,7 @@ function App() {
         <Route path="/faculty/technology" element={<TechnologyFaculty/>}/>
         <Route path="/faculty/biomedical" element={<BiomedicalFaculty/>}/>
         <Route path="/faculty/:facultyId/:deptId/form" element={<DepartmentForm />} />
-       <Route path="/" element={<Body />} />
+        <Route path="/" element={<Body />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<AdminPanel />} />
         <Route path="/admin-login" element={<AdminLogin />} />
